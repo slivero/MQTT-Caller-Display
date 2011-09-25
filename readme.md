@@ -2,6 +2,8 @@
 
 A simple hardware hack which uses an arduino to broadcast the telephone number of incoming calls using MQTT, the telephone numbers are provided by a BT caller display 50 unit.
 
+* Further details of the Software and Hardware will appear when I've had chance to write them up, probably in the form of a blog post at http://chemicaloliver.net *
+
 ## Principles 
 
 ### Caller Display (UK only)
