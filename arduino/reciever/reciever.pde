@@ -21,13 +21,12 @@ byte ip[]     = { 192, 168, 1, 8 };
 PubSubClient client(server, 1883, callback);
 
 const int bufferLength = 19;      //Length of buffer
-char stringBuffer[bufferLength];        //Buffer to hold input
+char stringBuffer[bufferLength];  //Buffer to hold input
 int stringIndex = 0;              //Index of next free element in buffer
 
 void setup()
 {
   Serial.begin(1200);
-  
   Serial.println("Serial Connected");
 
   Ethernet.begin(mac, ip);
@@ -37,7 +36,6 @@ void setup()
   {
     Serial.println("MQTT Connected");
   }
-
 }
 
 void loop()
@@ -49,7 +47,6 @@ void loop()
     //Check if the char read is a number
     if(inputChar  >= '0' && inputChar <= '9' )
     { 
-
         //Add number to buffer
         stringBuffer[stringIndex] = inputChar;
 
@@ -60,25 +57,27 @@ void loop()
 
   //If the buffer is long enough
   if(stringIndex == bufferLength)
-  {
-    Serial.println("Buffer full");
-    //remove initial irrelevant digits
-
+  {    
+    //convert the 
     String output = String(stringBuffer);
-    String telephoneNumberString = output.substring(8);
-
     
+    //remove initial irrelevant digits
+    String telephoneNumberString = output.substring(8); 
 
+    //convert back to char arry for sending
     char charBuf[12];
     telephoneNumberString.toCharArray(charBuf, 12);
 
     //Send the telephone number back over serial for debugging
     Serial.println(charBuf);
     client.publish("topic",charBuf);
-
+    
+    //reset the index ready for next time
     stringIndex = 0;
   }
 }
+
+
 
 void callback(char* topic, byte* payload,int length) {
   // handle message arrived
